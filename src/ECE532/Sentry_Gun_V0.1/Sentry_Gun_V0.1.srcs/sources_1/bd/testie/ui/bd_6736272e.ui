@@ -1,0 +1,112 @@
+{
+   guistr: "# # String gsaved with Nlview 6.5.12  2016-01-29 bk=1.3547 VDI=39 GEI=35 GUI=JA:1.6
+#  -string -flagsOSRD
+preplace port vga_hsync -pg 1 -y 180 -defaultsOSRD
+preplace port pwdn -pg 1 -y 220 -defaultsOSRD
+preplace port BTNU -pg 1 -y 210 -defaultsOSRD
+preplace port OV7670_XCLK -pg 1 -y 20 -defaultsOSRD
+preplace port OV7670_HREF -pg 1 -y 130 -defaultsOSRD
+preplace port OV7670_VSYNC -pg 1 -y 110 -defaultsOSRD
+preplace port sys_clock -pg 1 -y -610 -defaultsOSRD
+preplace port OV7670_SIOC -pg 1 -y 40 -defaultsOSRD
+preplace port BTNL -pg 1 -y 260 -defaultsOSRD
+preplace port OV7670_SIOD -pg 1 -y 60 -defaultsOSRD
+preplace port OV7670_PCLK -pg 1 -y 150 -defaultsOSRD
+preplace port reset_0 -pg 1 -y -650 -defaultsOSRD
+preplace port BTNC -pg 1 -y 190 -defaultsOSRD
+preplace port motor1 -pg 1 -y -740 -defaultsOSRD
+preplace port BTND -pg 1 -y -60 -defaultsOSRD
+preplace port vga_vsync -pg 1 -y 200 -defaultsOSRD
+preplace port BTNR -pg 1 -y 330 -defaultsOSRD
+preplace port motor2 -pg 1 -y -550 -defaultsOSRD
+preplace port reset -pg 1 -y 240 -defaultsOSRD
+preplace portBus vga444_blue -pg 1 -y 160 -defaultsOSRD
+preplace portBus vga444_red -pg 1 -y 120 -defaultsOSRD
+preplace portBus OV7670_D -pg 1 -y 170 -defaultsOSRD
+preplace portBus LED -pg 1 -y 560 -defaultsOSRD
+preplace portBus SW -pg 1 -y 680 -defaultsOSRD
+preplace portBus vga444_green -pg 1 -y 140 -defaultsOSRD
+preplace inst axi_gpio_btnu -pg 1 -lvl 1 -y 360 -defaultsOSRD
+preplace inst clk_wiz -pg 1 -lvl 3 -y -590 -defaultsOSRD
+preplace inst imgarray_axi_0 -pg 1 -lvl 3 -y -30 -defaultsOSRD
+preplace inst axi_gpio_sw -pg 1 -lvl 1 -y 670 -defaultsOSRD
+preplace inst microblaze_0_axi_periph -pg 1 -lvl 5 -y -260 -defaultsOSRD
+preplace inst axi_gpio_led -pg 1 -lvl 4 -y 550 -defaultsOSRD
+preplace inst axi_gpio_btnl -pg 1 -lvl 1 -y 550 -defaultsOSRD
+preplace inst axi_timer_0 -pg 1 -lvl 7 -y -760 -defaultsOSRD
+preplace inst microblaze_0_xlconcat -pg 1 -lvl 6 -y -730 -defaultsOSRD
+preplace inst axi_timer_1 -pg 1 -lvl 7 -y -550 -defaultsOSRD
+preplace inst mdm_1 -pg 1 -lvl 3 -y -720 -defaultsOSRD
+preplace inst microblaze_0_axi_intc -pg 1 -lvl 6 -y -440 -defaultsOSRD
+preplace inst axi_gpio_btnc -pg 1 -lvl 2 -y 290 -defaultsOSRD
+preplace inst rst_clk_wiz_100M -pg 1 -lvl 4 -y -510 -defaultsOSRD
+preplace inst microblaze_0 -pg 1 -lvl 3 -y -460 -defaultsOSRD
+preplace inst axi_gpio_btnd -pg 1 -lvl 1 -y 220 -defaultsOSRD
+preplace inst axi_gpio_btnr -pg 1 -lvl 2 -y 610 -defaultsOSRD
+preplace inst microblaze_0_local_memory -pg 1 -lvl 5 -y -820 -defaultsOSRD
+preplace inst ov7670_stream_0 -pg 1 -lvl 5 -y 320 -defaultsOSRD
+preplace inst axi_gpio_inputcontrol -pg 1 -lvl 2 -y 490 -defaultsOSRD
+preplace netloc rst_clk_wiz_100M_mb_reset 1 2 3 NJ -370 NJ -370 1410
+preplace netloc clk_wiz_locked 1 3 1 1040
+preplace netloc OV7670_HREF_1 1 0 5 NJ 100 NJ 100 NJ 100 NJ 100 NJ
+preplace netloc microblaze_0_axi_periph_M08_AXI 1 1 5 190 -660 NJ -660 NJ -660 NJ -660 1870
+preplace netloc microblaze_0_axi_periph_M04_AXI 1 0 6 -190 -880 NJ -880 NJ -880 NJ -880 NJ -730 1890
+preplace netloc ov7670_stream_0_pixel 1 2 4 NJ 480 NJ 480 NJ 510 1870
+preplace netloc ov7670_stream_0_vga_vsync 1 5 3 NJ 200 NJ 200 NJ
+preplace netloc ov7670_stream_0_vga444_green 1 5 3 NJ 140 NJ 140 NJ
+preplace netloc microblaze_0_intr 1 5 2 2040 -800 2320
+preplace netloc ov7670_stream_0_vga444_red 1 5 3 NJ 120 NJ 120 NJ
+preplace netloc OV7670_D_1 1 0 5 NJ 90 NJ 90 NJ 90 NJ 90 NJ
+preplace netloc BTNR_1 1 0 3 NJ 60 NJ 60 480
+preplace netloc microblaze_0_Clk 1 0 7 -150 40 NJ 20 NJ -360 NJ -630 1480 150 1980 -550 2330
+preplace netloc use_external_1 1 0 5 NJ 70 NJ 370 NJ 370 NJ 370 NJ
+preplace netloc microblaze_0_axi_periph_M06_AXI 1 0 6 -170 -860 NJ -860 NJ -860 NJ -860 NJ -720 1910
+preplace netloc microblaze_0_axi_periph_M03_AXI 1 5 2 1960 -600 NJ
+preplace netloc microblaze_0_intc_axi 1 5 1 1970
+preplace netloc microblaze_0_interrupt 1 2 5 NJ -780 NJ -780 NJ -750 NJ -790 2310
+preplace netloc gpio_io_i_1 1 0 2 NJ 740 120
+preplace netloc axi_timer_0_pwm0 1 7 1 2580
+preplace netloc ov7670_stream_0_vga444_blue 1 5 3 NJ 160 NJ 160 NJ
+preplace netloc microblaze_0_axi_periph_M10_AXI 1 3 3 1090 -670 NJ -670 1880
+preplace netloc microblaze_0_M_AXI_DC 1 3 2 NJ -620 NJ
+preplace netloc microblaze_0_ilmb_1 1 3 2 NJ -810 NJ
+preplace netloc sys_clock_1 1 0 3 NJ -610 NJ -610 480
+preplace netloc ov7670_stream_0_pwdn 1 5 3 NJ 220 NJ 220 NJ
+preplace netloc OV7670_PCLK_1 1 0 5 NJ 150 NJ 150 NJ 150 NJ 150 NJ
+preplace netloc microblaze_0_axi_periph_M05_AXI 1 0 6 -180 -870 NJ -870 NJ -870 NJ -870 NJ -740 1930
+preplace netloc microblaze_0_axi_dp 1 3 2 NJ -600 NJ
+preplace netloc ov7670_stream_0_vga_hsync 1 5 3 NJ 180 NJ 180 NJ
+preplace netloc axi_gpio_sw1_gpio_io_o 1 4 4 NJ 560 NJ 560 NJ 560 NJ
+preplace netloc rst_clk_wiz_100M_interconnect_aresetn 1 4 1 1420
+preplace netloc ov7670_stream_0_OV7670_XCLK 1 2 6 NJ 470 NJ 470 NJ 490 2040 20 NJ 20 NJ
+preplace netloc microblaze_0_axi_periph_M01_AXI 1 2 4 NJ -650 NJ -680 NJ -680 1860
+preplace netloc microblaze_0_M_AXI_IC 1 3 2 NJ -610 NJ
+preplace netloc ov7670_stream_0_reset 1 5 3 NJ 240 NJ 240 NJ
+preplace netloc microblaze_0_axi_periph_M07_AXI 1 1 5 170 -850 NJ -850 NJ -850 NJ -710 1900
+preplace netloc microblaze_0_axi_periph_M02_AXI 1 5 2 1950 -810 NJ
+preplace netloc microblaze_0_dlmb_1 1 3 2 NJ -840 NJ
+preplace netloc BTNL_1 1 0 2 NJ 120 120
+preplace netloc axi_timer_1_pwm0 1 7 1 2580
+preplace netloc SW_1_1 1 0 2 NJ -60 130
+preplace netloc Net 1 5 3 NJ 60 NJ 60 NJ
+preplace netloc OV7670_VSYNC_1 1 0 5 NJ 110 NJ 110 NJ 110 NJ 110 NJ
+preplace netloc microblaze_0_debug 1 2 2 NJ -800 NJ
+preplace netloc axi_gpio_btnd1_gpio_io_o 1 2 1 500
+preplace netloc axi_timer_1_interrupt 1 5 3 1990 -860 NJ -860 2560
+preplace netloc reset_0_1 1 0 4 NJ -650 NJ -650 500 -810 1000
+preplace netloc imgarray_axi_0_pixel_output 1 3 2 NJ -30 NJ
+preplace netloc BTNC_1 1 0 5 NJ 140 NJ 140 NJ 300 NJ 300 NJ
+preplace netloc ov7670_stream_0_OV7670_SIOC 1 5 3 NJ 40 NJ 40 NJ
+preplace netloc microblaze_0_axi_periph_M11_AXI 1 1 5 180 -820 NJ -820 NJ -820 NJ -690 1940
+preplace netloc microblaze_0_axi_periph_M09_AXI 1 0 6 -160 -830 NJ -830 NJ -830 NJ -830 NJ -700 1920
+preplace netloc axi_timer_0_interrupt 1 5 3 1960 -880 NJ -880 2570
+preplace netloc rst_clk_wiz_100M_peripheral_aresetn 1 0 7 -140 290 NJ 160 NJ 160 NJ 160 1420 140 NJ -540 2340
+preplace netloc ov7670_stream_0_display_pixel 1 2 4 NJ 450 NJ 450 NJ 500 1860
+levelinfo -pg 1 -270 -10 360 770 1250 1710 2200 2450 2600 -top -890 -bot 760
+",
+}
+{
+   da_axi4_cnt: "28",
+   da_board_cnt: "22",
+   da_mb_cnt: "5",
+}

@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Webtalk v2016.2 (64-bit)
+# SW Build 1577090 on Thu Jun  2 16:32:40 MDT 2016
+# IP Build 1577682 on Fri Jun  3 12:00:54 MDT 2016
+# Start of session at: Sat Mar 25 20:22:05 2017
+# Process ID: 27544
+# Current directory: d:/ece532/sentry_gun_v0.1/sentry_gun_v0.1.tmp/imgarray_axi_v1_0_v1_0_project/imgarray_axi_v1_0_v1_0_project.sim/sim_1/behav
+# Command line: wbtcv.exe -mode batch -source d:/ece532/sentry_gun_v0.1/sentry_gun_v0.1.tmp/imgarray_axi_v1_0_v1_0_project/imgarray_axi_v1_0_v1_0_project.sim/sim_1/behav/xsim.dir/exterminator_behav/webtalk/xsim_webtalk.tcl -notrace
+# Log file: d:/ece532/sentry_gun_v0.1/sentry_gun_v0.1.tmp/imgarray_axi_v1_0_v1_0_project/imgarray_axi_v1_0_v1_0_project.sim/sim_1/behav/webtalk.log
+# Journal file: d:/ece532/sentry_gun_v0.1/sentry_gun_v0.1.tmp/imgarray_axi_v1_0_v1_0_project/imgarray_axi_v1_0_v1_0_project.sim/sim_1/behav\webtalk.jou
+#-----------------------------------------------------------
+source d:/ece532/sentry_gun_v0.1/sentry_gun_v0.1.tmp/imgarray_axi_v1_0_v1_0_project/imgarray_axi_v1_0_v1_0_project.sim/sim_1/behav/xsim.dir/exterminator_behav/webtalk/xsim_webtalk.tcl -notrace

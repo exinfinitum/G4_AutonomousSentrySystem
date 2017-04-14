@@ -1,0 +1,383 @@
+#include "xparameters.h"
+#include "xtmrctr.h"
+#include "xtmrctr_l.h"
+#include <stdio.h>
+#include <math.h>
+#include "xil_types.h"
+#include "xil_io.h"
+//#include "xtmrctr_sinit.h"
+
+//TIMER 0
+volatile unsigned int *TIMER0_CONTROL = (unsigned int *)0x41c00000;
+volatile unsigned int *TIMER0_LOAD = (unsigned int *)0x41c00004;
+volatile unsigned int *TIMER0_COUNTER = (unsigned int *)0x41c00008;
+//TIMER 1
+volatile unsigned int *TIMER1_CONTROL = (unsigned int *)0x41c00010;
+volatile unsigned int *TIMER1_LOAD = (unsigned int *)0x41c00014;
+volatile unsigned int *TIMER1_COUNTER = (unsigned int *)0x41c00018;
+
+//TIMER1 0
+volatile unsigned int *TIMER0_sec_CONTROL = (unsigned int *)0x00020000;
+volatile unsigned int *TIMER0_sec_LOAD = (unsigned int *)0x00020004;
+volatile unsigned int *TIMER0_sec_COUNTER = (unsigned int *)0x00020008;
+//TIMER1 1
+volatile unsigned int *TIMER1_sec_CONTROL = (unsigned int *)0x00020010;
+volatile unsigned int *TIMER1_sec_LOAD = (unsigned int *)0x00020014;
+volatile unsigned int *TIMER1_sec_COUNTER = (unsigned int *)0x00020018;
+
+#define AXI_CLOCK_PERIOD 10;
+
+#include "imgarray_axi.h"
+
+
+#ifndef max
+    #define max(a,b) ((a) > (b) ? (a) : (b))
+#endif
+
+volatile unsigned int *warmup_ptr = (unsigned int*) XPAR_IMGARRAY_AXI_0_S00_AXI_BASEADDR;
+volatile unsigned int *axi_gpio_btnu = (unsigned int*) 0x40000000;
+volatile unsigned int *axi_gpio_btnd = (unsigned int*) 0x40010000;
+volatile unsigned int *axi_gpio_btnl = (unsigned int*) 0x00030000;
+volatile unsigned int *axi_gpio_btnr = (unsigned int*) 0x00040000;
+volatile unsigned int *axi_gpio_btnc = (unsigned int*) 0x00050000;
+volatile unsigned int *axi_gpio_sw = (unsigned int*) 0x40020000;
+volatile unsigned int *axi_gpio_led = (unsigned int*) 0x00060000;
+
+
+void WriteToPixel(int BaseAddress, int RegOffset, int Data)
+{
+	IMGARRAY_AXI_mWriteReg(BaseAddress, RegOffset, Data << 16);
+
+}
+
+int pixels[20][15];
+int pixel2coords[20][15][2];
+
+float calibrationPoints[3][2] = {{155500.0, 161500.0}, {184500.0, 161500.0}, {184500.0, 141000.0}};// upleft, upright, downright
+int32_t myPixel;
+int i = 0;
+int j = 0;
+uint8_t r = 0;
+uint8_t g = 0;
+uint8_t b = 0;
+int xcoord = 0;
+int ycoord = 0;
+int currLargest = 0;
+int threshold = 3;
+int motor_min = 7;
+int motor_res = 180000;
+void trackTargets()
+{
+		threshold = 1;
+		currLargest = 0;
+        for (i=1; i< 20; i ++){
+        	for (j = 0; j < 15; j++) {
+        	myPixel = IMGARRAY_AXI_mReadReg(XPAR_IMGARRAY_AXI_0_S00_AXI_BASEADDR, (((20*j)+i)*4));
+        	r = (myPixel & 0xf00) >> 8;
+        	g = (myPixel & 0xf0) >> 4;
+        	b = (myPixel & 0xf) >> 0;
+        	pixels[i][j] = max(0, (r - ((g + b)/2)));
+        	//pixels[i][j] = max(0, ((r + g)/2 - (b)));
+        	xcoord = currLargest < pixels[i][j] ? i : xcoord;
+        	ycoord = currLargest < pixels[i][j] ? j : ycoord;
+        	currLargest = currLargest < pixels[i][j] ? pixels[i][j] : currLargest;
+        	//WriteToPixel(XPAR_IMGARRAY_AXI_0_S00_AXI_BASEADDR, (((20*j)+i)*4), ((b << 0) + (g << 4) + (r << 8)));
+        	//WriteToPixel(XPAR_IMGARRAY_AXI_0_S00_AXI_BASEADDR, (((20*j)+i)*4), pixels[i][j] << 8);
+        	}
+        }
+
+        for (i=0; i< 20; i ++){
+        	for (j = 0; j < 15; j++) {
+			if ((xcoord == i) && (ycoord == j) && (currLargest >= threshold)) {
+			WriteToPixel(XPAR_IMGARRAY_AXI_0_S00_AXI_BASEADDR, (((20*j)+i)*4), 0xffffffff);
+			}
+			else {
+				WriteToPixel(XPAR_IMGARRAY_AXI_0_S00_AXI_BASEADDR, (((20*j)+i)*4), pixels[i][j]<<8);
+			}
+        	}
+        }
+
+}
+
+void recordTargets(int xduty, int yduty)
+{
+		currLargest = 0;
+        for (i=0; i< 20; i ++){
+        	for (j = 0; j < 15; j++) {
+        	myPixel = IMGARRAY_AXI_mReadReg(XPAR_IMGARRAY_AXI_0_S00_AXI_BASEADDR, (((20*j)+i)*4));
+        	r = (myPixel & 0xf00) >> 8;
+        	g = (myPixel & 0xf0) >> 4;
+        	b = (myPixel & 0xf) >> 0;
+        	//pixels[i][j] = max(0, (r - ((g + b)/2)));
+        	pixels[i][j] = max(0, (r - ((g + b)/2)));
+        	xcoord = currLargest < pixels[i][j] ? i : xcoord;
+        	ycoord = currLargest < pixels[i][j] ? j : ycoord;
+        	currLargest = currLargest < pixels[i][j] ? pixels[i][j] : currLargest;
+        	//WriteToPixel(XPAR_IMGARRAY_AXI_0_S00_AXI_BASEADDR, (((20*j)+i)*4), ((b << 0) + (g << 4) + (r << 8)));
+        	//WriteToPixel(XPAR_IMGARRAY_AXI_0_S00_AXI_BASEADDR, (((20*j)+i)*4), pixels[i][j] << 8);
+        	}
+        }
+        if (pixel2coords[xcoord][ycoord][0] == 0 && pixel2coords[xcoord][ycoord][1] == 0) {
+        pixel2coords[xcoord][ycoord][0] = xduty;
+        pixel2coords[xcoord][ycoord][1] = yduty;
+        }
+        for (i=0; i< 20; i ++){
+        	for (j = 0; j < 15; j++) {
+			if ((xcoord == i) && (ycoord == j) && (currLargest >= threshold)) {
+			WriteToPixel(XPAR_IMGARRAY_AXI_0_S00_AXI_BASEADDR, (((20*j)+i)*4), 0xffffffff);
+			}
+			else {
+				WriteToPixel(XPAR_IMGARRAY_AXI_0_S00_AXI_BASEADDR, (((20*j)+i)*4), pixels[i][j]<<8);
+			}}
+        }
+}
+
+
+void setup(int period, int duty)
+{
+    // set both MDT0 bit to be 0
+    *(TIMER0_CONTROL) &= 0xfffffffe;
+    *(TIMER1_CONTROL) &= 0xfffffffe;
+    // set PWMA0 and PWMB0 to be 1
+    *(TIMER0_CONTROL) |= 0x00000200;
+    *(TIMER1_CONTROL) |= 0x00000200;
+    // set the GENT bit to be 1
+    *(TIMER0_CONTROL) |= 0x00000004;
+    *(TIMER1_CONTROL) |= 0x00000004;
+    // set the assertion bit to be 1
+    *(TIMER0_CONTROL) |= 0x00000040;
+    *(TIMER1_CONTROL) |= 0x00000040;
+    // set the counter to go down (or up, doesn't matter)
+    *(TIMER0_CONTROL) |= 0x00000002;
+    *(TIMER1_CONTROL) |= 0x00000002;
+
+    //set PWM
+    *(TIMER0_LOAD) = period;
+    *(TIMER1_LOAD) = duty;
+}
+
+void setup_sec(int period, int duty)
+{
+    // set both MDT0 bit to be 0
+    *(TIMER0_sec_CONTROL) &= 0xfffffffe;
+    *(TIMER1_sec_CONTROL) &= 0xfffffffe;
+    // set PWMA0 and PWMB0 to be 1
+    *(TIMER0_sec_CONTROL) |= 0x00000200;
+    *(TIMER1_sec_CONTROL) |= 0x00000200;
+    // set the GENT bit to be 1
+    *(TIMER0_sec_CONTROL) |= 0x00000004;
+    *(TIMER1_sec_CONTROL) |= 0x00000004;
+    // set the assertion bit to be 1
+    *(TIMER0_sec_CONTROL) |= 0x00000040;
+    *(TIMER1_sec_CONTROL) |= 0x00000040;
+    // set the counter to go down (or up, doesn't matter)
+    *(TIMER0_sec_CONTROL) |= 0x00000002;
+    *(TIMER1_sec_CONTROL) |= 0x00000002;
+
+    //set PWM
+    *(TIMER0_sec_LOAD) = period;
+    *(TIMER1_sec_LOAD) = duty;
+}
+
+
+
+void ranging(int period0, int period1) {
+	int yscan = 170000;
+	int xscan = 180000;
+	setup(period0, xscan); //y
+	setup_sec(period1, yscan); //y
+	while (xscan >= 140000) {
+		yscan = 250000;
+		setup(period0, xscan); //y
+		xscan = xscan - 1000;
+		for (int i = 0; i < 800000; i++);
+		while (yscan >= 150000) {
+		for (int i = 0; i < 200000; i++);
+			setup_sec(period1, yscan); //y
+			setup(period0, xscan); //y
+			recordTargets(xscan, yscan);
+			yscan = yscan - 1000;
+		}
+	}
+}
+
+void calibrate(int period0, int period1){
+	// This is activated when the center button is pressed.
+	// Use a while loop.
+	for (int i = 0; i < 1000000; i++);
+	int curX = 160000;
+	int curY = 160000;
+	int calPointIndex = 0;
+	*axi_gpio_led = 0x00000000;
+	while (1) {
+		int incValue = *axi_gpio_sw;
+		// Directional control.
+		if (*axi_gpio_btnd & 0x1 == 1){
+			curY -= incValue;
+		}
+		if (*axi_gpio_btnu & 0x1 == 1){
+			curY += incValue;
+		}
+		if (*axi_gpio_btnl & 0x1 == 1){
+			curX += incValue;
+		}
+		if (*axi_gpio_btnr & 0x1 == 1){
+			curX -= incValue;
+		}
+		if (*axi_gpio_btnc & 0x1 == 1) {
+			*axi_gpio_led += 1 << calPointIndex;
+			calPointIndex++;
+			calibrationPoints[calPointIndex][0] = curX;
+			calibrationPoints[calPointIndex][1] = curY;
+			for (int i = 0; i < 2000000; i++);
+
+		}
+
+		// When center button is pressed, save the location of the current point.
+		// First point is upper left of camera view, second is upper right, third is lower right.
+		// Using these points, we can interpolate the intervening positions.
+
+		setup(period0, curX); //x
+		setup_sec(period1, curY); //y
+		if (calPointIndex >= 3) return;
+		for (int i = 0; i < 800000; i++);
+
+	}
+
+}
+
+int main()
+{
+	int period0 = 2000000; //20ms //1960800
+	int duty0 = 160000; //when period is 2000000, the duty is from 70000 to 250000, 180 degree
+
+	int period1 = 2000000; //20ms //1960800
+	int duty1 = 160000; //when period is 2000000, the duty is from 70000 to 250000, 180 degree
+
+	//setup for the timer 0////////////////////////
+	XTmrCtr_Config TMR0;
+	TMR0.DeviceId = 0;
+	TMR0.BaseAddress = 0x41c00000;
+	TMR0.SysClockFreqHz = 100000000;
+
+	XTmrCtr timer0;
+	timer0.Config = TMR0;
+
+	//setup for the timer 1////////////////////////
+	XTmrCtr_Config TMR1;
+	TMR1.DeviceId = 1;
+	TMR1.BaseAddress = 0x41c10000;
+	TMR1.SysClockFreqHz = 100000000;
+
+	XTmrCtr timer1;
+	timer1.Config = TMR1;
+
+	// setup timer0 configuration///////////////////////
+	int status0;
+	int status1;
+
+	status0 = XTmrCtr_Initialize(&timer0,TMR0.DeviceId);
+	status1 = XTmrCtr_Initialize(&timer1,TMR1.DeviceId);
+
+	if (status0 != XST_SUCCESS)
+	{
+		XTmrCtr_Stop(&timer0, 0);
+		XTmrCtr_Stop(&timer0, 1);
+	}
+	else
+	{
+		XTmrCtr_SetOptions(&timer0, 0, XTC_DOWN_COUNT_OPTION | XTC_ENABLE_ALL_OPTION);
+		XTmrCtr_SetOptions(&timer0, 1, XTC_DOWN_COUNT_OPTION | XTC_ENABLE_ALL_OPTION);
+
+		setup(period0, duty0);
+
+		XTmrCtr_SetResetValue(&timer0, 0, period0);
+		XTmrCtr_SetResetValue(&timer0, 1, duty0);
+
+		XTmrCtr_Start(&timer0, 0);
+		XTmrCtr_Start(&timer0, 1);
+/*
+		for (int i = 0; i<= 500; i++){}
+		setup(2000000, 150000);//196000
+		for (int i = 0; i<= 500; i++){}
+
+		setup(2000000, 100000);//98000
+		for (int i = 0; i<= 500; i++){}
+
+		setup(2000000, 150000);
+		for (int i = 0; i<= 500; i++){} */
+	}
+
+	if (status1 != XST_SUCCESS)
+	{
+		XTmrCtr_Stop(&timer1, 0);
+		XTmrCtr_Stop(&timer1, 1);
+	}
+	else
+	{
+		XTmrCtr_SetOptions(&timer1, 0, XTC_DOWN_COUNT_OPTION | XTC_ENABLE_ALL_OPTION);
+		XTmrCtr_SetOptions(&timer1, 1, XTC_DOWN_COUNT_OPTION | XTC_ENABLE_ALL_OPTION);
+
+		setup_sec(period1, duty1);
+
+		XTmrCtr_SetResetValue(&timer1, 0, period1);
+		XTmrCtr_SetResetValue(&timer1, 1, duty1);
+
+		XTmrCtr_Start(&timer1, 0);
+		XTmrCtr_Start(&timer1, 1);
+	}
+	//ranging(period0, period1);
+    while (1)
+    {
+
+    if (*axi_gpio_btnc & 0x1 == 1)
+    {
+    	calibrate(period0, period1);
+		for (int i = 0; i < 2000000; i++);
+
+    }
+	trackTargets();
+
+	float x_coord = (float)xcoord / 20.0 * motor_res;
+	float y_coord = (float)ycoord / 15.0 * motor_res;
+	//setup(period0, 170000);
+	//setup_sec(period0, 150000);
+	setup(period0, ((int)((float)xcoord*(calibrationPoints[0][0] - calibrationPoints[1][0])/20.0) + calibrationPoints[1][0]));// +
+			//((int)((float)ycoord*(calibrationPoints[0][1] - calibrationPoints[1][1])/15.0) + calibrationPoints[1][1])); //x
+	setup_sec(period1, ((int)((float)ycoord*(calibrationPoints[1][1] - calibrationPoints[2][1])/15.0) + calibrationPoints[2][1]));// +
+				//((int)((float)xcoord*(calibrationPoints[1][0] - calibrationPoints[2][0])/20.0) + calibrationPoints[2][0])); //x
+	//setup_sec(period1, (int)((float)ycoord*(161500.0 - 141000.0)/15.0) + 141000); //y
+	// Now, we get x and y coordinates, where 0 <= x <= 20 and 0 <= x <= 15.
+	// Typecast to float, perform calculations, and
+	/*float x_coord = (float)xcoord / 20.0 * motor_res;
+	float y_coord = (float)ycoord / 15.0 * motor_res;
+	xcoord = 10000*((int)(round(x_coord)) + motor_min);
+	ycoord = 10000*((int)(round(y_coord)) + motor_min);
+	 */
+
+	//xcoord = ((int)(round(x_coord)) + motor_min*10000);
+	//ycoord = ((int)(round(y_coord)) + motor_min*10000);
+
+	//XTmrCtr_Stop(&timer0, 0);
+	//XTmrCtr_Stop(&timer0, 1);
+	//XTmrCtr_Stop(&timer1, 0);
+	//XTmrCtr_Stop(&timer1, 1);
+
+	//At 180 cm, xmin in field of view = 184500, xmax = 155500
+	//ymin = 141000, ymax = 161500
+
+
+	//XTmrCtr_SetResetValue(&timer0, 0, period0);
+	//XTmrCtr_SetResetValue(&timer0, 1, xcoord);
+	//XTmrCtr_SetResetValue(&timer1, 0, period1);
+	//XTmrCtr_SetResetValue(&timer1, 1, ycoord);
+	//XTmrCtr_Start(&timer0, 1);
+	//XTmrCtr_Start(&timer0, 0);
+	//XTmrCtr_Start(&timer1, 1);
+	//XTmrCtr_Start(&timer1, 0);
+
+
+
+    }
+    return 0;
+}

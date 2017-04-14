@@ -1,0 +1,4 @@
+ERROR: Exception caught trying to open file D:\ECE532\Sentry_Gun_V0.1\Sentry_Gun_V0.1.runs\synth_1/runme.log
+	Exception name: Error
+	Exception error code: 70
+	Exception message: Permission denied

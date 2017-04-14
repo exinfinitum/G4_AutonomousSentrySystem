@@ -1,0 +1,26 @@
+#-----------------------------------------------------------
+# Vivado v2016.2 (64-bit)
+# SW Build 1577090 on Thu Jun  2 16:32:40 MDT 2016
+# IP Build 1577682 on Fri Jun  3 12:00:54 MDT 2016
+# Start of session at: Wed Feb 22 01:56:23 2017
+# Process ID: 9068
+# Current directory: D:/ECE532/Sentry_Gun_V0.1/Sentry_Gun_V0.1.runs/synth_1
+# Command line: vivado.exe -log testie_wrapper.vds -mode batch -messageDb vivado.pb -notrace -source testie_wrapper.tcl
+# Log file: D:/ECE532/Sentry_Gun_V0.1/Sentry_Gun_V0.1.runs/synth_1/testie_wrapper.vds
+# Journal file: D:/ECE532/Sentry_Gun_V0.1/Sentry_Gun_V0.1.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source testie_wrapper.tcl -notrace
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository 'd:/ECE532'.
+WARNING: [IP_Flow 19-3656] If you move the project, the path for repository 'd:/ECE532' may become invalid. A better location for the repostory would be in a path adjacent to the project. (Current project location is 'd:/ECE532/Sentry_Gun_V0.1/Sentry_Gun_V0.1.runs/synth_1'.)
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'D:/Xilinx/Vivado/2016.2/data/ip'.
+CRITICAL WARNING: [IP_Flow 19-1663] Duplicate IP found for 'user:user:OV7670:1.0'. The one found in IP location 'd:/ECE532/IPs/OV7670/OV7670.srcs/sources_1/imports' will take precedence over the same IP in location d:/ECE532/Lab_and_Project/VideoInOutToDDRwithCustomVGA_2015/OV7670/OV7670.srcs/sources_1/imports
+CRITICAL WARNING: [IP_Flow 19-1663] Duplicate IP found for 'user:user:vga640x480:1.0'. The one found in IP location 'd:/ECE532/IPs/VGA/VGA.srcs' will take precedence over the same IP in location d:/ECE532/Lab_and_Project/VideoInOutToDDRwithCustomVGA_2015/VGA/VGA.srcs
+CRITICAL WARNING: [IP_Flow 19-1663] Duplicate IP found for 'xilinx.com:ip:Sentry_Gun_V0.1:1.0'. The one found in IP location 'd:/ECE532/Sentry_Gun_V0.1' will take precedence over the same IP in location d:/ECE532/Sentry_Gun_V0.1 - Copy (2)
+CRITICAL WARNING: [IP_Flow 19-1663] Duplicate IP found for 'xilinx.com:user:warmup:1.0'. The one found in IP location 'd:/ECE532/warmup_1.0' will take precedence over the same IP in location d:/ECE532/warmup/ip_repo/warmup_1.0
+Command: synth_design -top testie_wrapper -part xc7a100tcsg324-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a100t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a100t'
+INFO: Launching helper process for spawning children vivado processes
+INFO: Helper process launched with PID 21856 

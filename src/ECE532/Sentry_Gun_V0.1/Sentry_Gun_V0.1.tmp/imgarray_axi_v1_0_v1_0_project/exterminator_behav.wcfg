@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="exterminator_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="exterminator" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="7367500000fs"></ZoomStartTime>
+      <ZoomEndTime time="14948500001fs"></ZoomEndTime>
+      <Cursor1Time time="13685000000fs"></Cursor1Time>
+   </zoom_setting>
+   <WVObjectSize size="14" />
+   <wvobject fp_name="/exterminator/imgarray_axi_v1_0_S00_AXI_inst/\CounterGen[0].CC /pixelcount" type="array">
+      <obj_property name="ElementShortName">pixelcount[7:0]</obj_property>
+      <obj_property name="ObjectShortName">pixelcount[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/exterminator/imgarray_axi_v1_0_S00_AXI_inst/\CounterGen[0].CC /rcount" type="array">
+      <obj_property name="ElementShortName">rcount[15:0]</obj_property>
+      <obj_property name="ObjectShortName">rcount[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/exterminator/imgarray_axi_v1_0_S00_AXI_inst/\CounterGen[0].CC /gcount" type="array">
+      <obj_property name="ElementShortName">gcount[15:0]</obj_property>
+      <obj_property name="ObjectShortName">gcount[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/exterminator/imgarray_axi_v1_0_S00_AXI_inst/\CounterGen[0].CC /bcount" type="array">
+      <obj_property name="ElementShortName">bcount[15:0]</obj_property>
+      <obj_property name="ObjectShortName">bcount[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/exterminator/imgarray_axi_v1_0_S00_AXI_inst/\CounterGen[0].CC /outr" type="array">
+      <obj_property name="ElementShortName">outr[15:0]</obj_property>
+      <obj_property name="ObjectShortName">outr[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/exterminator/imgarray_axi_v1_0_S00_AXI_inst/\CounterGen[0].CC /outg" type="array">
+      <obj_property name="ElementShortName">outg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">outg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/exterminator/imgarray_axi_v1_0_S00_AXI_inst/\CounterGen[0].CC /outb" type="array">
+      <obj_property name="ElementShortName">outb[15:0]</obj_property>
+      <obj_property name="ObjectShortName">outb[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/exterminator/imgarray_axi_v1_0_S00_AXI_inst/slv_reg0" type="array">
+      <obj_property name="ElementShortName">slv_reg0[31:0]</obj_property>
+      <obj_property name="ObjectShortName">slv_reg0[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/exterminator/imgarray_axi_v1_0_S00_AXI_inst/slv_reg1" type="array">
+      <obj_property name="ElementShortName">slv_reg1[31:0]</obj_property>
+      <obj_property name="ObjectShortName">slv_reg1[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/exterminator/imgarray_axi_v1_0_S00_AXI_inst/slv_reg2" type="array">
+      <obj_property name="ElementShortName">slv_reg2[31:0]</obj_property>
+      <obj_property name="ObjectShortName">slv_reg2[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/exterminator/imgarray_axi_v1_0_S00_AXI_inst/slv_reg3" type="array">
+      <obj_property name="ElementShortName">slv_reg3[31:0]</obj_property>
+      <obj_property name="ObjectShortName">slv_reg3[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/exterminator/imgarray_axi_v1_0_S00_AXI_inst/slv_reg4" type="array">
+      <obj_property name="ElementShortName">slv_reg4[31:0]</obj_property>
+      <obj_property name="ObjectShortName">slv_reg4[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/exterminator/imgarray_axi_v1_0_S00_AXI_inst/slv_reg5" type="array">
+      <obj_property name="ElementShortName">slv_reg5[31:0]</obj_property>
+      <obj_property name="ObjectShortName">slv_reg5[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/exterminator/imgarray_axi_v1_0_S00_AXI_inst/pixel_clock" type="logic">
+      <obj_property name="ElementShortName">pixel_clock</obj_property>
+      <obj_property name="ObjectShortName">pixel_clock</obj_property>
+   </wvobject>
+</wave_config>

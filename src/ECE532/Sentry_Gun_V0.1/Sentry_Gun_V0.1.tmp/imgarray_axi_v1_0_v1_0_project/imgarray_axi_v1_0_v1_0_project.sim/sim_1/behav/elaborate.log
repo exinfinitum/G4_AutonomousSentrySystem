@@ -1,0 +1,15 @@
+Vivado Simulator 2016.2
+Copyright 1986-1999, 2001-2016 Xilinx, Inc. All Rights Reserved.
+Running: D:/Xilinx/Vivado/2016.2/bin/unwrapped/win64.o/xelab.exe -wto 6494bc1003544370a486042a55b4734e --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot exterminator_behav xil_defaultlib.exterminator xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.colourcounter
+Compiling module xil_defaultlib.redcount
+Compiling module xil_defaultlib.imgarray_axi_v1_0_S00_AXI_defaul...
+Compiling module xil_defaultlib.exterminator
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot exterminator_behav
